@@ -90,6 +90,9 @@
     cursor: pointer;
   }
   .note { margin-top: 16px; font-size: 12.5px; color: var(--muted); line-height: 1.5; }
+  .hint { margin-top: 14px; text-align: left; font-size: 13px; color: var(--muted); }
+  .hint summary { cursor: pointer; color: var(--accent); }
+  .hint p { margin: 8px 0; line-height: 1.5; }
 </style>
 </head>
 <body>
@@ -109,6 +112,13 @@
   <b>«Start server!»</b> или <b>«Renew Server!»</b>.<br>
   Запуск занимает пару минут.<br>
   Если вначале мелькнёт проверка Cloudflare — она проходит сама за несколько секунд.</p>
+
+  <details class="hint">
+    <summary>📌 Поставить кнопку на экран телефона (1 раз)</summary>
+    <p><b>Android (Chrome):</b> меню ⋮ → «Добавить на главный экран».</p>
+    <p><b>iPhone (Safari):</b> кнопка «Поделиться» → «На экран “Домой”».</p>
+    <p>После этого просто открываешь иконку и жмёшь кнопку — как обычное приложение.</p>
+  </details>
 </main>
 
 <script>
