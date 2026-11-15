@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0d1117">
+<title>qwerty123 — Minecraft сервер</title>
+<style>
+  :root {
+    --bg: #0d1117;
+    --card: #161b22;
+    --border: #30363d;
+    --text: #e6edf3;
+    --muted: #8b949e;
+    --accent: #27b1d9;
+    --green: #2ea043;
+    --green-hover: #3fb950;
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; }
+  body {
+    margin: 0;
+    background:
+      radial-gradient(1000px 500px at 50% -10%, #164a5f33, transparent),
+      var(--bg);
+    color: var(--text);
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+  }
+  .card {
+    width: 100%;
+    max-width: 480px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px 22px;
+    text-align: center;
+    box-shadow: 0 10px 40px #00000066;
+  }
+  h1 { margin: 0 0 6px; font-size: 24px; line-height: 1.2; }
+  .sub { margin: 0 0 22px; color: var(--muted); font-size: 14px; }
+  .btn {
+    display: block;
+    width: 100%;
+    padding: 16px 18px;
+    margin: 12px 0;
+    font-size: 17px;
+    font-weight: 700;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    background: #21262d;
+    color: var(--text);
+    cursor: pointer;
+    transition: transform .06s ease, background .15s ease;
+    -webkit-tap-highlight-color: transparent;
+    text-decoration: none;
+  }
+  .btn:active { transform: scale(0.98); }
+  .btn.primary {
+    background: var(--green);
+    border-color: var(--green);
+    color: #fff;
+    font-size: 19px;
+    padding: 18px;
+  }
+  .btn.primary:hover { background: var(--green-hover); }
+  .ip-row {
+    margin-top: 18px;
+    padding: 12px;
+    background: #0d1117;
+    border: 1px dashed var(--border);
+    border-radius: 10px;
+    font-size: 14px;
+    color: var(--muted);
+    display: none; /* показывается, если задан serverIp */
+    word-break: break-all;
+  }
+  .ip-row code { color: var(--accent); font-size: 15px; }
+  .copy-btn {
+    margin-left: 8px;
+    padding: 4px 10px;
+    font-size: 12px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: #21262d;
+    color: var(--text);
+    cursor: pointer;
+  }
+  .note { margin-top: 16px; font-size: 12.5px; color: var(--muted); line-height: 1.5; }
+</style>
+</head>
+<body>
+<main class="card" id="ui">
+  <h1 id="srv-name">qwerty123</h1>
+  <p class="sub">Запуск и продление в один тап — без логина</p>
+
+  <a class="btn primary" id="btn-start" href="#">▶&nbsp; ЗАПУСТИТЬ СЕРВЕР</a>
+  <a class="btn" id="btn-renew" href="#">🔄&nbsp; ПРОДЛИТЬ СЕРВЕР</a>
+
+  <div class="ip-row" id="ip-row">
+    IP: <code id="srv-ip"></code>
+    <button class="copy-btn" onclick="copyIp()">копировать</button>
+  </div>
+
+  <p class="note">Откроется страница сервера FreeMcServer — нажми там большую кнопку
+  <b>«Start server!»</b> или <b>«Renew Server!»</b>.<br>
+  Запуск занимает пару минут.<br>
+  Если вначале мелькнёт проверка Cloudflare — она проходит сама за несколько секунд.</p>
+</main>
+
+<script>
+// ═══════════════════════ НАСТРОЙКИ (уже заполнены твоим сервером) ═══════════════════════
+const CONFIG = {
+  // Страница сервера FreeMcServer (публичная, без логина)
+  infoUrl:  "https://freemcserver.net/server/2219537",
+  // Прямые ссылки на кнопки запуска и продления
+  startUrl: "https://freemcserver.net/server/2219537/start",
+  renewUrl: "https://freemcserver.net/server/2219537/renew",
+
+  serverName: "qwerty123",
+  serverIp:   "qwerty.enderman.cloud:26783"
+};
+// ════════════════════════════════════════════════════════════════════════════════════════
+
+document.getElementById("srv-name").textContent = CONFIG.serverName;
+
+const btnStart = document.getElementById("btn-start");
+const btnRenew = document.getElementById("btn-renew");
+btnStart.href = CONFIG.startUrl || CONFIG.infoUrl;
+btnRenew.href = CONFIG.renewUrl || CONFIG.infoUrl;
+
+if (CONFIG.serverIp) {
+  document.getElementById("srv-ip").textContent = CONFIG.serverIp;
+  document.getElementById("ip-row").style.display = "block";
+}
+
+function copyIp() {
+  if (!CONFIG.serverIp) return;
+  (navigator.clipboard ? navigator.clipboard.writeText(CONFIG.serverIp) : Promise.reject())
+    .then(() => {
+      const b = document.querySelector(".copy-btn");
+      b.textContent = "✓";
+      setTimeout(() => (b.textContent = "копировать"), 1200);
+    })
+    .catch(() => alert("IP: " + CONFIG.serverIp));
+}
+</script>
+</body>
+</html>
